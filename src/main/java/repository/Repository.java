@@ -55,7 +55,7 @@ public interface Repository<ID, E extends Entity<ID>> {
      * @param id id-ul de sters
      * @throws IllegalArgumentException daca id-ul este null
      */
-    void delete(ID id);
+    E delete(ID id);
 
     /**
      * actualizeaza o entitate
@@ -63,5 +63,5 @@ public interface Repository<ID, E extends Entity<ID>> {
      * @param entity entitate noua
      * @throws IllegalArgumentException daca entitatea este null sau inexistenta
      */
-    void update(E entity);
+    E update(E entity);
 }

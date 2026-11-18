@@ -45,15 +45,17 @@ public class FileRepository<ID, E extends Entity<ID>> extends InMemoryRepository
     }
 
     @Override
-    public void delete(ID id) {
-        super.delete(id);
+    public E delete(ID id) {
+        E deleted = super.delete(id);
         persist();
+        return deleted;
     }
 
     @Override
-    public void update(E entity) {
-        super.update(entity);
+    public E update(E entity) {
+        E updated = super.update(entity);
         persist();
+        return updated;
     }
 
     private void loadFromFile() {

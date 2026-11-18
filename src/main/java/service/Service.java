@@ -35,17 +35,33 @@ public class Service {
         this.userValidator = userValidator;
     }
 
-    public void adaugaUtilizator(long id, String nume, String email) {
+    public Utilizator adaugaUtilizator(long id, String nume, String email) {
         Utilizator user = new Utilizator(id, nume, email);
         userValidator.valideaza(user);
         users.save(user);
+        return user;
+    }
+
+    public Utilizator adaugaUtilizator(String nume, String email) {
+        long nextId = StreamSupport.stream(users.findAll().spliterator(), false)
+                .mapToLong(Utilizator::getId).max().orElse(0) + 1;
+        return adaugaUtilizator(nextId, nume, email);
+    }
+
+    public Utilizator updateUser(Long id, String nume,String email){
+        Utilizator user = new Utilizator(id,nume,email);
+        userValidator.valideaza(user);
+        users.update(user);
+        return user;
     }
 
     public void stergeUtilizator(long id) {
         requireUser(id);
         friendships.findAll(friendship -> friendship.getUser1() == id || friendship.getUser2() == id)
                 .stream().map(Prietenie::getId).forEach(friendships::delete);
-        users.delete(id);
+        if (users.delete(id) == null) {
+            throw new UserNotFoundException(id + " nu a fost gasit");
+        }
     }
 
     public void adaugaPrietenie(long id1, long id2) {

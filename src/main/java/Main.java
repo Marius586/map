@@ -55,18 +55,20 @@ public class Main {
             System.out.println("6 cea mai sociabila comunitate (diametru)");
             System.out.println("7 cauta utilizatori dupa nume");
             System.out.println("8 utilizatori fara prieteni");
+            System.out.println("9 update utilizator");
             System.out.println("0 exit");
+            if (!scanner.hasNextLine()) {
+                break;
+            }
             String option = scanner.nextLine();
             try {
                 switch (option) {
                     case "1":
-                        System.out.print("id: ");
-                        long id = Long.parseLong(scanner.nextLine());
                         System.out.print("nume: ");
                         String name = scanner.nextLine();
                         System.out.print("email: ");
-                        service.adaugaUtilizator(id, name, scanner.nextLine());
-                        System.out.println("utilizator adaugat");
+                        Utilizator added = service.adaugaUtilizator(name, scanner.nextLine());
+                        System.out.println("utilizator adaugat cu id: " + added.getId());
                         break;
                     case "2":
                         System.out.print("id: ");
@@ -102,6 +104,15 @@ public class Main {
                         break;
                     case "8":
                         service.getUtilizatoriFaraPrieteni().forEach(System.out::println);
+                        break;
+                    case "9":
+                        System.out.print("id: ");
+                        Long id = Long.parseLong(scanner.nextLine());
+                        System.out.print("nume: ");
+                        String nume = scanner.nextLine();
+                        System.out.print("email: ");
+                        String email = scanner.nextLine();
+                        service.updateUser(id,nume,email);
                         break;
                     case "99":
                         service.printall();

@@ -33,23 +33,24 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     }
 
     @Override
-    public void delete(ID id) {
+    public E delete(ID id) {
         if (id == null) throw new IllegalArgumentException("id nu poate fi null.");
         E entity = findOne(id);
-        if (entity == null) throw new IllegalArgumentException("entitate cu id:" + id + " nu exista");
+        if (entity == null) return null;
         entities.remove(entity);
+        return entity;
     }
 
     @Override
-    public void update(E entity) {
+    public E update(E entity) {
         if (entity == null) throw new IllegalArgumentException("entitate null");
         Optional<Integer> index = java.util.stream.IntStream.range(0, entities.size())
                 .filter(i -> entity.getId().equals(entities.get(i).getId()))
                 .boxed().findFirst();
         if (index.isPresent()) {
-            entities.set(index.get(), entity);
+            return entities.set(index.get(), entity);
         } else {
-            throw new IllegalArgumentException("entitate cu id:" + entity.getId() + " nu exista");
+            return null;
         }
     }
 }

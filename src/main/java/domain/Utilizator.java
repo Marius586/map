@@ -6,7 +6,7 @@ import java.util.Objects;
  * entitate de tip utilizator
  */
 public class Utilizator implements Entity<Long> {
-    private final long id;
+    private long id;
     private final String nume;
     private final String email;
 
@@ -26,6 +26,10 @@ public class Utilizator implements Entity<Long> {
     @Override
     public Long getId() { 
         return id; 
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
     
     public String getNume() { 

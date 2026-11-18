@@ -28,3 +28,13 @@ Buclele clasice ramase:
 - while-ul meniului din Main este controlul interactiv al aplicatiei, nu parcurgerea unei
   colectii. Switch-ul meniului reprezinta dispatch-ul comenzilor si nu este o transformare
   de colectie.
+
+Laboratorul 5 - JDBC
+
+Repository-ul DATABASE foloseste PostgreSQL configurat in
+config.properties.
+
+Schema bazei de date este in database.sql. Cheile straine din friendships folosesc
+ON DELETE CASCADE, astfel stergerea unui utilizator elimina prieteniile sale automat.
+Valorile SQL sunt transmise exclusiv prin PreparedStatement, iar erorile SQLException
+sunt impachetate in RepositoryException.
